@@ -28,7 +28,6 @@ Pillow==5.4.1
 pycparser==2.19
 pycrypto==2.6.1
 pygame==1.9.4
-pygobject==3.26.1
 pylint==1.9.4
 pyxdg==0.25
 SecretStorage==2.3.1
