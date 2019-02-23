@@ -41,7 +41,7 @@
 <script type="text/javascript">
     var userio = "{{ current_user.username }}";
     $(document).ready(function() {
-        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+        var socket = io.connect();
         socket.on('connect', function() {
             socket.send('User has connected!');
         });
