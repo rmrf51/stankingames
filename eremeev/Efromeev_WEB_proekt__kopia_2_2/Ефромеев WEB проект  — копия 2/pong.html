@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pong</title>
+	<meta charset="utf-8">
+	<link href="style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700&amp;subset=cyrillic" rel="stylesheet">
+</head>
+<body>
+<div class="fix">
+	<div class="backimage-game"></div> 
+	<header class="header-container-game">
+		<div class="header-menu">
+			<a class="logo" href="index.html"><span>STANKIN</span>Games</a>
+			<ul class="user-list">
+				<li class="user-item">
+					<a href="" class="login">Войти</a>
+				</li>
+				<li class="user-item">
+					<a href="" class="reg">Регистация</a>
+				</li>
+			</ul>
+		</div>
+	</header>
+	<main class="main-container">
+		<div class="main-wrapper">
+			<ul class="main-menu-list">
+				<li class="menu-item">
+					<a href="index.html" class="nav-link">Главная</a>
+				</li>
+				<li class="menu-item all-games">
+					<a href="games.html" class="nav-link gms">Игры</a>
+					<ul class="sub-games">
+						<li><a href="pong.html" class="">Pong</a></li>
+						<li><a href="snake.html" class="">Snake</a></li>
+						<li><a href="" class="">Flappy Ball</a></li>
+						<li><a href="" class="">Alive game</a></li>
+					</ul>
+				</li>
+				<li class="menu-item">
+					<a href="tutor.html" class="nav-link">Туториалы</a>
+				</li>
+				<li class="menu-item">
+					<a href="blog.html" class="nav-link">Блог</a>
+				</li>
+				<li class="menu-item">
+					<a href="about.html" class="nav-link">О нас</a>
+				</li>
+				<li class="menu-item">
+					<a href="" class="nav-link rules-link">Правила</a>
+				</li>
+			</ul>
+
+			<section class="game-content">
+				<div class="pong-block">
+					<div class="game-wrap">
+						<h3>Ping Pong</h3>
+					 	<canvas class="canvas-pong"></canvas>
+					 </div>
+					 <div class="rule-wrap">
+					 	<h3>Управление</h3>
+						 <div class="pong-rule">
+						 	Начать игру ENTER
+						 	<p>
+							 	Левый игрок:
+							 	вверх - Q
+							 	вниз - A
+						 	</p>
+						 	<p>
+							 	Правый игрок:
+							 	вверх - P
+							 	вниз - ;
+						 	</p>
+						 	Игра длится до 11 очков
+						 </div>
+						 <div class="chat"><span>Юрик теперь делай чат</span></div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>	
+
+
+
+	<section class="modal-rules modal">
+		<div class="rules">
+			<div class="top-rules"></div>
+			<div class="bottom-rules">
+				<h2>Правила</h2>
+				<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</span>
+			</div>
+			<button id="rule-close" class="rules-close hidden">закрыть</button>
+			<label for="rule-close" class="cls">x</label>
+		</div>
+	</section>
+</div>
+		<script>
+			function rule(){
+
+			var ruleup = document.querySelector(".modal-rules");
+			var rulelocate = document.querySelector(".rules-link");
+			var ruleclose = ruleup.querySelector(".rules-close");
+			rulelocate.addEventListener("click",function(evt){
+				evt.preventDefault();
+				ruleup.classList.add("rules-show");
+				rulelocate.classList.add("active-nav-link");
+			});
+			ruleclose.addEventListener("click",function(evt){
+				evt.preventDefault();
+				ruleup.classList.remove("rules-show");
+				rulelocate.classList.remove("active-nav-link");
+				actmodal = 0;
+			});
+		}
+		rule();
+		</script>
+		<script src="pong.js"></script>
+</body>
+</html>

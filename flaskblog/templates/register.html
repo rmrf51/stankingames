@@ -1,5 +1,43 @@
 {% extends "layout.html" %}
+
+{% block content1 %}
+
+<div class="backimage-about"></div> 
+
+{% endblock content1 %}
+
+{% block header%}
+
+<header class="header-container-games">
+    <div class="header-menu">
+            <a class="logo" href="{{ url_for('super_home') }}"><span>STANKIN</span>Games</a>
+            <ul class="user-list">
+                {% if current_user.is_authenticated %}
+
+                <!-- Нукит, во это поменяй-->
+                <a class="nav-item nav-link" href="{{ url_for('new_post') }}">New Post</a>
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+
+                {% else %}
+
+                <li class="user-item">
+                    <a href="{{ url_for('login') }}" class="login">Войти</a>
+                </li>
+                <li class="user-item">
+                    <a href="{{ url_for('register') }}" class="reg">Регистация</a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+
+{% endblock header %}
+
 {% block content %}
+<main class="main-container">
+		<div class="main-wrapper">
     <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
@@ -86,8 +124,51 @@
     </div>
 
     <div class="border-top pt-3">
-        <small class="text-muted">
+        <small class="text-muted hPosts">
             Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}"> Sing In </a>
         </small>
     </div>
+
+</div>
+</main>	
+
+
+    <section class="modal-rules modal">
+            <div class="rules">
+                <div class="top-rules"></div>
+                <div class="bottom-rules">
+                    <h2>Правила</h2>
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </span>
+                </div>
+                <button id="rule-close" class="rules-close hidden">закрыть</button>
+                <label for="rule-close" class="cls">x</label>
+            </div>
+        </section>
+            <script>
+                function rule(){
+        
+                var ruleup = document.querySelector(".modal-rules");
+                var rulelocate = document.querySelector(".rules-link");
+                var ruleclose = ruleup.querySelector(".rules-close");
+                rulelocate.addEventListener("click",function(evt){
+                    evt.preventDefault();
+                    ruleup.classList.add("rules-show");
+                    rulelocate.classList.add("active-nav-link");
+                });
+                ruleclose.addEventListener("click",function(evt){
+                    evt.preventDefault();
+                    ruleup.classList.remove("rules-show");
+                    rulelocate.classList.remove("active-nav-link");
+                    actmodal = 0;
+                });
+            }
+            rule();
+            </script>
+
 {% endblock content %}

@@ -1,12 +1,23 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, Flask
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+from flask_socketio import SocketIO, send
+
+
+#sockets
+socketio = SocketIO(app);
+
+@socketio.on('message')
+def handleMessage(msg):
+    print('Message: ' + msg )
+    send(msg, broadcast=True)
+
 
 
 @app.route("/")
@@ -19,6 +30,31 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
+
+@app.route("/tutor")
+def tutor():
+    return render_template('tutor.html', title='Tutorial')
+
+
+# games
+@app.route("/games")
+def games():
+    return render_template('games.html', title='Games')
+
+@app.route("/pong")
+def pong():
+    return render_template('games/pong.html', title='Pong')
+
+@app.route("/snake")
+def snake():
+    return render_template('games/snake.html', title='Snake')
+
+
+#end games
+
+@app.route("/super_home")
+def super_home():
+    return render_template('super_home.html', title='About')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

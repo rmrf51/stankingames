@@ -38,4 +38,5 @@ Werkzeug==0.14.1
 wrapt==1.11.1
 WTForms==2.2.1
 gunicorn==19.9.0
+flask-socketio==3.3.1
 

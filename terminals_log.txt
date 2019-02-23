@@ -1,0 +1,12 @@
+rmrf51@rmrf51-N750JV:~/projects/PythonBlog/Flask_Blog$ pip install gunicorn
+Collecting gunicorn
+  Using cached https://files.pythonhosted.org/packages/8c/da/b8dd8deb741bff556db53902d4706774c8e1e67265f69528c14c003644e6/gunicorn-19.9.0-py2.py3-none-any.whl
+Installing collected packages: gunicorn
+Successfully installed gunicorn-19.9.0
+rmrf51@rmrf51-N750JV:~/projects/PythonBlog/Flask_Blog$ pip freeze > requirements.txt
+rmrf51@rmrf51-N750JV:~/projects/PythonBlog/Flask_Blog$ git add .
+rmrf51@rmrf51-N750JV:~/projects/PythonBlog/Flask_Blog$ git commit -m "heroku commit"
+[master 88d3f44] heroku commit
+ 1 file changed, 2 insertions(+)
+rmrf51@rmrf51-N750JV:~/projects/PythonBlog/Flask_Blog$ git push heroku master
+
