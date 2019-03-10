@@ -7,11 +7,11 @@ from flaskblog.models import User
 
 # Register
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sing Up')
+    username = StringField('Никнейм', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Почта', validators=[DataRequired(), Email()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    confirm_password = PasswordField('Подтвердить пароль', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Зарегистрироваться')
 
     def validate_username(self, username):
 
@@ -37,9 +37,9 @@ class LoginForm(FlaskForm):
 
 # Update account
 class UpdateAccountForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture (png, jpg and jpeg only) ', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    username = StringField('Никнейм', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Почта', validators=[DataRequired(), Email()])
+    picture = FileField('Обновить фото профиля ', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Update')
 
     def validate_username(self, username):
@@ -60,9 +60,9 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
+    title = StringField('Заголовок', validators=[DataRequired()])
+    content = TextAreaField('Текст', validators=[DataRequired()])
+    submit = SubmitField('Запостить')
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])

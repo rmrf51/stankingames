@@ -47,7 +47,15 @@ def pong():
 
 @app.route("/snake")
 def snake():
-    return render_template('games/snake.html', title='Snake')
+    return render_template('games/snake/snake.html', title='Snake')
+
+@app.route("/livegame")
+def livegame():
+    return render_template('games/livegame/live.html', title='Live')
+
+@app.route("/flappybird")
+def flappybird():
+    return render_template('games/flappyBird/flappybird.html', title='FlappyBird')
 
 
 #end games

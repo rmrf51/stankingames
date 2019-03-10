@@ -14,10 +14,15 @@
             <ul class="user-list">
                 {% if current_user.is_authenticated %}
 
-                <!-- Нукит, во это поменяй-->
-                <a class="nav-item nav-link" href="{{ url_for('new_post') }}">New Post</a>
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                <li class="nav-item-user">
+                 <a class="nav-item " href="{{ url_for('new_post') }}">Новый пост</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('account') }}">Профиль</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('logout') }}">Выйти</a>
+                </li>
 
                 {% else %}
 
@@ -74,13 +79,13 @@
                 <div class="top-rules"></div>
                 <div class="bottom-rules">
                     <h2>Правила</h2>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </span>
+                    <span>
+                            <p>Использование Сайтом означает согласие пользователя на обработку персональных данных, указанных в момент создания учетной записи пользователя.
+                            
+                           <p> Сайт не проверяет подлинность предоставленной ему информации. Но Сайт исходит из предположения того, что пользователь дает достоверную информацию о себе.
+                         
+                           <p>При пользовании Сайтом пользователь не вправе распространять, загружать, посылать, передавать или любым иным способом размещать и распространять информацию, являющейся незаконной, вредоносной, оскорбительной, являющейся пропагандой насилия, жестокости, расовой дискриминации и т.д.
+                       </span>
                 </div>
                 <button id="rule-close" class="rules-close hidden">закрыть</button>
                 <label for="rule-close" class="cls">x</label>

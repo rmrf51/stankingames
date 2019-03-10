@@ -78,11 +78,11 @@ function collision () {
 	//player.x + 20
   if ( ball.x + 5 === 20 && (ball.y + 5 >= player_1.y && ball.y + 5 <= player_1.y + 100) ){
 		ball.dx = -ball.dx;
-		splashMusic.play();
+		// splashMusic.play();
   }
   if ( ball.x + 5 === canvas.width - 20 && ( ball.y + 5 >= player_2.y && ball.y + 5 <= player_2.y + 100 ) ){
       ball.dx = -ball.dx;
-      splashMusic.play();
+    //   splashMusic.play();
   }
 }
 function addPoint () {

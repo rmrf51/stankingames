@@ -14,10 +14,15 @@
             <ul class="user-list">
                 {% if current_user.is_authenticated %}
 
-                <!-- Нукит, во это поменяй-->
-                <a class="nav-item nav-link" href="{{ url_for('new_post') }}">New Post</a>
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                <li class="nav-item-user">
+                 <a class="nav-item " href="{{ url_for('new_post') }}">New Post</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('account') }}">Account</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('logout') }}">Logout</a>
+                </li>
 
                 {% else %}
 
