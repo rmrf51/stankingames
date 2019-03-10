@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, Flask
 from flaskblog import app, db, bcrypt, mail
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm, Score
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
@@ -45,15 +45,16 @@ def games():
 def pong():
     return render_template('games/pong.html', title='Pong')
 
-@app.route("/snake")
+@app.route("/snake", methods=['GET', 'POST'])
 def snake():
+    # form = Score()
     return render_template('games/snake/snake.html', title='Snake')
 
 @app.route("/livegame")
 def livegame():
     return render_template('games/livegame/live.html', title='Live')
 
-@app.route("/flappybird")
+@app.route("/flappybird", methods=['GET', 'POST'])
 def flappybird():
     return render_template('games/flappyBird/flappybird.html', title='FlappyBird')
 

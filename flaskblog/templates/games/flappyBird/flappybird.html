@@ -33,11 +33,17 @@
 
     </head>
     <body>
+
+
         <button class="startGame"  id="start"> Начать игру </button>
         <button class="restartGame hidden"  id="restart"> Заново</button>
+
+
         <canvas class="canvas-ball" id="canvas-ball" width="288" height = "512"> 
         </canvas>
        
+
+
         <script>
         var cvs = document.getElementById('canvas-ball');
         var ctx =cvs.getContext('2d');
@@ -114,7 +120,10 @@
                     && (yPos <= pipe[i].y + upGround.height
                     || yPos + bird.height >= pipe[i].y + upGround.height + gap) || yPos + bird.height >= cvs.height - frontGround.height) {
                     restart.classList.remove('hidden');
-                    ctx.fillText('Ваш счет ' + score, 85, cvs.height-230)
+
+                    
+
+                    ctx.fillText('Ваш счет ' + score, 85, cvs.height-230);
                     return 0;
                     }
 
