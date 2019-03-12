@@ -47,6 +47,11 @@
     var userio = "{{ current_user.username }}";
     $(document).ready(function() {
         var socket = io.connect();
+
+        socket.on('disconnect', function() {
+		    socket.send('User has disconect!');
+	    });
+
         socket.on('connect', function() {
             socket.send('User has connected!');
         });
