@@ -746,6 +746,7 @@ ul{
     display: flex;
     flex-content: bottom;
 }
+
 /* flappyBAllCanvas */
 .startGame{
     border:none;
@@ -753,9 +754,11 @@ ul{
     color:black;
     background: orange;
     border-radius: 10px;
-    position: absolute;
-    top: 215px;
-    left: 60px;
+    position: relative;
+    /* top: 550px;
+    left: 100px; */
+    top: -220px;
+    left: 190px;
 }
 .restartGame{
     border:none;
@@ -763,13 +766,45 @@ ul{
     color:black;
     background: orange;
     border-radius: 10px;
-    position: absolute;
-    top: 215px;
-    left: 100px;
+    position: relative;
+    /* top: 550px;
+    left: 120px; */
+    top: -220px;
+    left: 160px;
 }
 .canvas-ball{
-    background-image: url('img/bg.png');
+    background-image: url("{{ url_for('static', filename='img/' + 'bg.png') }}");
 }
-.hidden{
+.hidden-flappy{
     visibility: hidden;
+}
+
+/* live-game */
+
+#canvas-live{
+    width:600px;
+    height: 600px;
+    border: 3px solid gray;
+    margin: 40px;
+    background-color: black;
+}
+.live-button{
+    border:none;
+    color:white;
+    background-color: orange;
+    font-size:22px;
+    border:2px solid black;
+    border-radius: 10px;
+}
+.live-button:hover{
+    background-color:black;
+    color:orange;
+}
+
+
+/* snake-game */
+
+.canvas-snake{
+    display: block;
+    margin: 0 auto;
 }

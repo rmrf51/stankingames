@@ -1,15 +1,154 @@
-<html>
-    <head>
-        <title>Snake Game</title>
-        <style>
-            .canvas-snake{
-                display: block;
-                margin: 0 auto;
-            }
-        </style>
-    </head>
-    <canvas id="canvas-snake" width="608" height="608"></canvas>
-    <script>
+{% extends "layout.html" %}
+
+{% block content1 %}
+<div class="fix">
+<div class="backimage-game"></div> 
+</div>
+{% endblock content1 %}
+
+{% block header%}
+
+<header class="header-container-games">
+    <div class="header-menu">
+            <a class="logo" href="{{ url_for('super_home') }}"><span>STANKIN</span>Games</a>
+            <ul class="user-list">
+                {% if current_user.is_authenticated %}
+
+                <li class="nav-item-user">
+                 <a class="nav-item " href="{{ url_for('new_post') }}">New Post</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('account') }}">Account</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('logout') }}">Logout</a>
+                </li>
+
+                {% else %}
+
+                <li class="user-item">
+                    <a href="{{ url_for('login') }}" class="login">Войти</a>
+                </li>
+                <li class="user-item">
+                    <a href="{{ url_for('register') }}" class="reg">Регистация</a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+</div>
+{% endblock header %}
+
+{% block content %}
+
+<!-- сокеты -->
+<script type="text/javascript">
+    var userio = "{{ current_user.username }}";
+    $(document).ready(function() {
+        var socket = io.connect();
+        socket.on('connect', function() {
+            socket.send('User has connected!');
+        });
+        socket.on('message', function(msg) {
+            $("#messages").append('<li>' + msg + '</li>');
+            console.log('Received message');
+        });
+        $('#sendbutton').on('click', function() {
+            socket.send(userio + ': ' + $('#myMessage').val());
+            $('#myMessage').val('');
+            var block = document.getElementById("chatdiv");
+            setTimeout(()=>{block.scrollTop = block.scrollHeight;}, 50);
+        });
+    });
+    </script>
+
+
+<div class="fix">
+<section class="game-content">
+    <div class="pong-block">
+        <div class="game-wrap">
+            <h3>Flappy bird</h3>
+            <div class="game-wrap">
+                    <canvas id="canvas-snake" width="608" height="608"></canvas>
+            </div>
+         </div>
+         <div class="rule-wrap">
+             <h3 style="padding: 20px">Управление</h3>
+             <div class="pong-rule">
+                 Начать игру ENTER
+                 <p>
+                     Левый игрок:
+                     вверх - Q
+                     вниз - A
+                 </p>
+                 <p>
+                     Правый игрок:
+                     вверх - P
+                     вниз - ;
+                 </p>
+                 Игра длится до 11 очков
+             </div>
+
+
+             <div id="chatdiv" class="chat" style="overflow-y: auto;"><ul id="messages"></ul>
+            </div>
+            <input type="text" id="myMessage" size="20">
+            <button id="sendbutton">Send</button></div>
+
+
+
+        
+        </canvas>
+    </div>
+</section>
+</div>
+</main>	
+
+
+
+<section class="modal-rules modal">
+    <div class="rules">
+        <div class="top-rules"></div>
+        <div class="bottom-rules">
+            <h2>Правила</h2>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </span>
+        </div>
+        <button id="rule-close" class="rules-close hidden">закрыть</button>
+        <label for="rule-close" class="cls">x</label>
+    </div>
+</section>
+</div>
+
+<script>
+        function rule(){
+
+        var ruleup = document.querySelector(".modal-rules");
+        var rulelocate = document.querySelector(".rules-link");
+        var ruleclose = ruleup.querySelector(".rules-close");
+        rulelocate.addEventListener("click",function(evt){
+            evt.preventDefault();
+            ruleup.classList.add("rules-show");
+            rulelocate.classList.add("active-nav-link");
+        });
+        ruleclose.addEventListener("click",function(evt){
+            evt.preventDefault();
+            ruleup.classList.remove("rules-show");
+            rulelocate.classList.remove("active-nav-link");
+            actmodal = 0;
+        });
+    }
+    rule();
+</script>
+
+
+<script>
         const cvs = document.getElementById("canvas-snake");
         const ctx = cvs.getContext("2d");
         const box = 32;
@@ -129,4 +268,4 @@
         }
         
         let game = setInterval(draw,100);</script>
-</html>
+{% endblock content %}

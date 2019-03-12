@@ -1,154 +1,262 @@
-<html>
-    <head>
-        <meta charset = 'utf-8'>
-        <title>Flappy Bird</title>
-        <style>
-            .startGame{
-                border:none;
-                font-size: 30px;
-                color:black;
-                background: orange;
-                border-radius: 10px;
-                position: absolute;
-                top: 215px;
-                left: 60px;
-            }
-            .restartGame{
-                border:none;
-                font-size: 30px;
-                color:black;
-                background: orange;
-                border-radius: 10px;
-                position: absolute;
-                top: 215px;
-                left: 100px;
-            }
-            .canvas-ball{
-                background-image: url("{{ url_for('static', filename='img/' + 'bg.png') }}");
-            }
-            .hidden{
-                visibility: hidden;
-            }
-        </style>
+{% extends "layout.html" %}
 
-    </head>
-    <body>
+{% block content1 %}
+<div class="fix">
+<div class="backimage-game"></div> 
+</div>
+{% endblock content1 %}
 
+{% block header%}
 
-        <button class="startGame"  id="start"> Начать игру </button>
-        <button class="restartGame hidden"  id="restart"> Заново</button>
+<header class="header-container-games">
+    <div class="header-menu">
+            <a class="logo" href="{{ url_for('super_home') }}"><span>STANKIN</span>Games</a>
+            <ul class="user-list">
+                {% if current_user.is_authenticated %}
 
+                <li class="nav-item-user">
+                 <a class="nav-item " href="{{ url_for('new_post') }}">New Post</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('account') }}">Account</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('logout') }}">Logout</a>
+                </li>
 
-        <canvas class="canvas-ball" id="canvas-ball" width="288" height = "512"> 
-        </canvas>
-       
+                {% else %}
 
+                <li class="user-item">
+                    <a href="{{ url_for('login') }}" class="login">Войти</a>
+                </li>
+                <li class="user-item">
+                    <a href="{{ url_for('register') }}" class="reg">Регистация</a>
+                </li>
 
-        <script>
-        var cvs = document.getElementById('canvas-ball');
-        var ctx =cvs.getContext('2d');
-        var start = document.getElementById('start');
-        var restart = document.getElementById('restart');
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+</div>
+{% endblock header %}
 
+{% block content %}
 
-
-        var bird = new Image();
-        var backGround = new Image();
-        var frontGround = new Image();
-        var bottomGround = new Image();
-        var upGround = new Image();
-
-        backGround.src = "{{ url_for('static', filename='img/' + 'bg.png') }}";
-        frontGround.src = "{{ url_for('static', filename='img/' + 'fg.png') }}";
-        bottomGround.src = "{{ url_for('static', filename='img/' + 'pipeBottom.png') }}";
-        upGround.src = "{{ url_for('static', filename='img/' + 'pipeUp.png') }}";
-        bird.src = "{{ url_for('static', filename='img/' + 'bird.png') }}";
-
-        var gap = 105;
-        var xPos = 10;
-        var yPos = 150;
-        var gravity = 1.5;
-        var score = 0;
-        // var flyAudio = new Audio();
-        // var scoreAudio = new Audio();
-
-        // flyAudio.src = 'music/fly.mp3';
-        // scoreAudio.src = 'music/score.mp3';
-
-        document.addEventListener('keydown',function(e){
-            if ( e.keyCode === 32){
-                moveUp();
-            } 
+<!-- сокеты -->
+<script type="text/javascript">
+    var userio = "{{ current_user.username }}";
+    $(document).ready(function() {
+        var socket = io.connect();
+        socket.on('connect', function() {
+            socket.send('User has connected!');
         });
+        socket.on('message', function(msg) {
+            $("#messages").append('<li>' + msg + '</li>');
+            console.log('Received message');
+        });
+        $('#sendbutton').on('click', function() {
+            socket.send(userio + ': ' + $('#myMessage').val());
+            $('#myMessage').val('');
+            var block = document.getElementById("chatdiv");
+            setTimeout(()=>{block.scrollTop = block.scrollHeight;}, 50);
+        });
+    });
+    </script>
 
-        start.addEventListener('click',drawScene);
-        restart.addEventListener('click',reload);
 
-        function moveUp(){
-            // flyAudio.play();
-            for(var i =0; i< 30; i++){
-                yPos-= 1;
-            }
+<div class="fix">
+<section class="game-content">
+    <div class="pong-block">
+        <div class="game-wrap">
+            <h3>Flappy bird</h3>
+            <div class="game-wrap">
+            <button class="startGame"  id="start"> Начать игру </button>
+            <button class="restartGame hidden-flappy"  id="restart"> Заново</button>
+            <canvas class="canvas-ball" id="canvas-ball" width="288" height = "512"> 
+            </div>
+         </div>
+         <div class="rule-wrap">
+             <h3 style="padding: 20px">Управление</h3>
+             <div class="pong-rule">
+                 Начать игру ENTER
+                 <p>
+                     Левый игрок:
+                     вверх - Q
+                     вниз - A
+                 </p>
+                 <p>
+                     Правый игрок:
+                     вверх - P
+                     вниз - ;
+                 </p>
+                 Игра длится до 11 очков
+             </div>
+
+
+             <div id="chatdiv" class="chat" style="overflow-y: auto;"><ul id="messages"></ul>
+            </div>
+            <input type="text" id="myMessage" size="20">
+            <button id="sendbutton">Send</button></div>
+
+
+
         
-            gravity = 1.5;
-            
+        </canvas>
+    </div>
+</section>
+</div>
+</main>	
+
+
+
+<section class="modal-rules modal">
+    <div class="rules">
+        <div class="top-rules"></div>
+        <div class="bottom-rules">
+            <h2>Правила</h2>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </span>
+        </div>
+        <button id="rule-close" class="rules-close hidden">закрыть</button>
+        <label for="rule-close" class="cls">x</label>
+    </div>
+</section>
+</div>
+
+<script>
+        function rule(){
+
+        var ruleup = document.querySelector(".modal-rules");
+        var rulelocate = document.querySelector(".rules-link");
+        var ruleclose = ruleup.querySelector(".rules-close");
+        rulelocate.addEventListener("click",function(evt){
+            evt.preventDefault();
+            ruleup.classList.add("rules-show");
+            rulelocate.classList.add("active-nav-link");
+        });
+        ruleclose.addEventListener("click",function(evt){
+            evt.preventDefault();
+            ruleup.classList.remove("rules-show");
+            rulelocate.classList.remove("active-nav-link");
+            actmodal = 0;
+        });
+    }
+    rule();
+</script>
+
+
+
+
+
+<script>
+    var cvs = document.getElementById('canvas-ball');
+    var ctx =cvs.getContext('2d');
+    var start = document.getElementById('start');
+    var restart = document.getElementById('restart');
+
+
+
+    var bird = new Image();
+    var backGround = new Image();
+    var frontGround = new Image();
+    var bottomGround = new Image();
+    var upGround = new Image();
+
+    backGround.src = "{{ url_for('static', filename='img/' + 'bg.png') }}";
+    frontGround.src = "{{ url_for('static', filename='img/' + 'fg.png') }}";
+    bottomGround.src = "{{ url_for('static', filename='img/' + 'pipeBottom.png') }}";
+    upGround.src = "{{ url_for('static', filename='img/' + 'pipeUp.png') }}";
+    bird.src = "{{ url_for('static', filename='img/' + 'bird.png') }}";
+
+    var gap = 105;
+    var xPos = 10;
+    var yPos = 150;
+    var gravity = 1.5;
+    var score = 0;
+    // var flyAudio = new Audio();
+    // var scoreAudio = new Audio();
+
+    // flyAudio.src = 'music/fly.mp3';
+    // scoreAudio.src = 'music/score.mp3';
+
+    document.addEventListener('keydown',function(e){
+        if ( e.keyCode === 32){
+            moveUp();
+        } 
+    });
+
+    start.addEventListener('click',drawScene);
+    restart.addEventListener('click',reload);
+
+    function moveUp(){
+        // flyAudio.play();
+        for(var i =0; i< 30; i++){
+            yPos-= 1;
         }
+    
+        gravity = 1.5;
+        
+    }
 
-        var pipe = [];
-        pipe[0] = {
-            x: cvs.width,
-            y: 0
-        }
+    var pipe = [];
+    pipe[0] = {
+        x: cvs.width,
+        y: 0
+    }
 
-        function drawScene(){
-            start.classList.add('hidden');
-            ctx.drawImage(backGround,0,0);
-            for( var i =0; i< pipe.length;i++){
-                ctx.drawImage(upGround,pipe[i].x,pipe[i].y);
-                ctx.drawImage(bottomGround,pipe[i].x, pipe[i].y + upGround.height + gap);
-                pipe[i].x --;
+    function drawScene(){
+        start.classList.add('hidden');
+        ctx.drawImage(backGround,0,0);
+        for( var i =0; i< pipe.length;i++){
+            ctx.drawImage(upGround,pipe[i].x,pipe[i].y);
+            ctx.drawImage(bottomGround,pipe[i].x, pipe[i].y + upGround.height + gap);
+            pipe[i].x --;
 
-                if(pipe[i].x == 110){
-                    pipe.push({
-                        x: cvs.width,
-                        y: Math.floor(Math.random() * upGround.height) - upGround.height
-                    })
-                }
-
-                if(xPos + bird.width >= pipe[i].x
-                    && xPos <= pipe[i].x + upGround.width
-                    && (yPos <= pipe[i].y + upGround.height
-                    || yPos + bird.height >= pipe[i].y + upGround.height + gap) || yPos + bird.height >= cvs.height - frontGround.height) {
-                    restart.classList.remove('hidden');
-
-                    
-
-                    ctx.fillText('Ваш счет ' + score, 85, cvs.height-230);
-                    return 0;
-                    }
-
-
-                if(pipe[i].x ==5 ){
-                    score++;
-                    // scoreAudio.play();
-                }
+            if(pipe[i].x == 110){
+                pipe.push({
+                    x: cvs.width,
+                    y: Math.floor(Math.random() * upGround.height) - upGround.height
+                })
             }
-            ctx.drawImage(frontGround,0, cvs.height - frontGround.height);
-            ctx.drawImage(bird,xPos,yPos);
 
-            yPos+=gravity;
-            gravity+=0.02;
-            ctx.fillStyle="#000";
-            ctx.font = "24px Arial";
-            ctx.fillText('Score ' + score, 10, cvs.height-20);
+            if(xPos + bird.width >= pipe[i].x
+                && xPos <= pipe[i].x + upGround.width
+                && (yPos <= pipe[i].y + upGround.height
+                || yPos + bird.height >= pipe[i].y + upGround.height + gap) || yPos + bird.height >= cvs.height - frontGround.height) {
+                restart.classList.remove('hidden');
 
-            requestAnimationFrame(drawScene);
+                
+
+                ctx.fillText('Ваш счет ' + score, 85, cvs.height-230);
+                return 0;
+                }
+
+
+            if(pipe[i].x ==5 ){
+                score++;
+                // scoreAudio.play();
+            }
         }
-        function reload(){
-            location.reload();
-        }
+        ctx.drawImage(frontGround,0, cvs.height - frontGround.height);
+        ctx.drawImage(bird,xPos,yPos);
+
+        yPos+=gravity;
+        gravity+=0.02;
+        ctx.fillStyle="#000";
+        ctx.font = "24px Arial";
+        ctx.fillText('Score ' + score, 10, cvs.height-20);
+
+        requestAnimationFrame(drawScene);
+    }
+    function reload(){
+        location.reload();
+    }
 
 
-        </script>
-    </body>
-</html>
+    </script>
+{% endblock content %}

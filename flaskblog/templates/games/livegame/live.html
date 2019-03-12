@@ -1,168 +1,291 @@
-<html>
-    <head>
-        <meta charset = 'utf-8'>
-        <title>live</title>
-        <style>
-            #canvas-live{
-                width:600px;
-                height: 600px;
-                border: 3px solid gray;
-                margin: 40px;
-                background-color: black;
-            }
-            .live-button{
-                border:none;
-                color:white;
-                background-color: orange;
-                font-size:22px;
-                border:2px solid black;
-                border-radius: 10px;
-            }
-            .live-button:hover{
-                background-color:black;
-                color:orange;
-            }
-        </style>
-    </head>
-    <body>
+{% extends "layout.html" %}
+
+{% block content1 %}
+<div class="fix">
+<div class="backimage-game"></div> 
+</div>
+{% endblock content1 %}
+
+{% block header%}
+
+<header class="header-container-games">
+    <div class="header-menu">
+            <a class="logo" href="{{ url_for('super_home') }}"><span>STANKIN</span>Games</a>
+            <ul class="user-list">
+                {% if current_user.is_authenticated %}
+
+                <li class="nav-item-user">
+                 <a class="nav-item " href="{{ url_for('new_post') }}">New Post</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('account') }}">Account</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('logout') }}">Logout</a>
+                </li>
+
+                {% else %}
+
+                <li class="user-item">
+                    <a href="{{ url_for('login') }}" class="login">Войти</a>
+                </li>
+                <li class="user-item">
+                    <a href="{{ url_for('register') }}" class="reg">Регистация</a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+</div>
+{% endblock header %}
+
+{% block content %}
+
+<!-- сокеты -->
+<script type="text/javascript">
+    var userio = "{{ current_user.username }}";
+    $(document).ready(function() {
+        var socket = io.connect();
+        socket.on('connect', function() {
+            socket.send('User has connected!');
+        });
+        socket.on('message', function(msg) {
+            $("#messages").append('<li>' + msg + '</li>');
+            console.log('Received message');
+        });
+        $('#sendbutton').on('click', function() {
+            socket.send(userio + ': ' + $('#myMessage').val());
+            $('#myMessage').val('');
+            var block = document.getElementById("chatdiv");
+            setTimeout(()=>{block.scrollTop = block.scrollHeight;}, 50);
+        });
+    });
+    </script>
+
+
+<div class="fix">
+<section class="game-content">
+    <div class="pong-block">
+        <div class="game-wrap">
+            <h3>Flappy bird</h3>
+            <div class="game-wrap">
+                    <canvas id="canvas-live" width="600" height = "600"> </canvas>
+                    <p>Количество циклов <span id='count'></span></p>
+                   <button class="live-button" id='start'>Начать</button>
+                   <button class="live-button" id='restart'>Заново</button>
+                   <button class="live-button" id='pause'>Пауза</button>
+                   <button class="live-button" id='cont'>Продолжить</button>
+            </div>
+         </div>
+         <div class="rule-wrap">
+             <h3 style="padding: 20px">Управление</h3>
+             <div class="pong-rule">
+                 Начать игру ENTER
+                 <p>
+                     Левый игрок:
+                     вверх - Q
+                     вниз - A
+                 </p>
+                 <p>
+                     Правый игрок:
+                     вверх - P
+                     вниз - ;
+                 </p>
+                 Игра длится до 11 очков
+             </div>
+
+
+             <div id="chatdiv" class="chat" style="overflow-y: auto;"><ul id="messages"></ul>
+            </div>
+            <input type="text" id="myMessage" size="20">
+            <button id="sendbutton">Send</button></div>
+
+
+
         
-        <canvas id="canvas-live" width="600" height = "600"> </canvas>
-        <p>Количество циклов <span id='count'></span></p>
-       <button class="live-button" id='start'>Начать</button>
-       <button class="live-button" id='restart'>Заново</button>
-       <button class="live-button" id='pause'>Пауза</button>
-       <button class="live-button" id='cont'>Продолжить</button>
-        <script>
-        
-var canvas = document.getElementById('canvas-live'); 
-var ctx = canvas.getContext('2d'); 
-var mas=[]; 
-var count=0; 
-var timer; 
-var ret = false;
-var stop = false;
-var pointcount = 0;
+        </canvas>
+    </div>
+</section>
+</div>
+</main>	
 
-canvas.onclick = function(event){ 
-    var x = event.offsetX; 
-    var y = event.offsetY; 
-    console.log(x); 
-    console.log(y); 
-    x = Math.floor(x/10); 
-    y = Math.floor(y/10); 
-    mas[y][x]=1; 
-    console.log(mas); 
-    drawField(); 
-    pointcount++;
-} 
 
-function goLife(){ 
-    var n=60, m=60; 
-    for (var i=0; i<m; i++){ 
-        mas[i]=[]; 
-        for (var j=0; j<n; j++){ 
-            mas[i][j]=0; 
-            } 
-        } 
-} 
-goLife(); 
 
-var start = document.getElementById('start');
-start.addEventListener('click',function(){
-    if(pointcount === 0){
-        alert('Нарисуйте изначальные клетки');
-    }else{
-        ret = false;
-        stop = false;
-        console.log(pause);
-        startLife();
+<section class="modal-rules modal">
+    <div class="rules">
+        <div class="top-rules"></div>
+        <div class="bottom-rules">
+            <h2>Правила</h2>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </span>
+        </div>
+        <button id="rule-close" class="rules-close hidden">закрыть</button>
+        <label for="rule-close" class="cls">x</label>
+    </div>
+</section>
+</div>
+
+<script>
+        function rule(){
+
+        var ruleup = document.querySelector(".modal-rules");
+        var rulelocate = document.querySelector(".rules-link");
+        var ruleclose = ruleup.querySelector(".rules-close");
+        rulelocate.addEventListener("click",function(evt){
+            evt.preventDefault();
+            ruleup.classList.add("rules-show");
+            rulelocate.classList.add("active-nav-link");
+        });
+        ruleclose.addEventListener("click",function(evt){
+            evt.preventDefault();
+            ruleup.classList.remove("rules-show");
+            rulelocate.classList.remove("active-nav-link");
+            actmodal = 0;
+        });
     }
-});
+    rule();
+</script>
 
-var pause = document.getElementById('pause');
-pause.addEventListener('click',function(){
-    pauseClick();
-});
-function pauseClick(){
-    stop = true;
-}
-var cont = document.getElementById('cont');
-cont.addEventListener('click',function(){
-    stop = false;
-    startLife();
-});
 
-var re = document.getElementById('restart');
-re.addEventListener('click',function(){
-    ret= true;
-    pointcount = 0;
-    restart();
-    
-});
-function restart(){
-    ctx.clearRect(0, 0, 600, 600); 
-    for (var i=0; i<60; i++){ 
-        for (var j=0; j<60; j++){ 
-                mas[i][j] = 0; 
-            } 
-     } 
-     count = 0;
-     document.getElementById('count').innerHTML = count; 
-     goLife();
-}
 
-function drawField(){ 
-    ctx.clearRect(0, 0, 600, 600); 
-    for (var i=0; i<60; i++){ 
-        for (var j=0; j<60; j++){ 
-            if (mas[i][j]==1){ 
-                ctx.fillStyle = '#66ff00';
-                ctx.fillRect(j*10, i*10, 10, 10); 
+
+
+<script>
+        
+        var canvas = document.getElementById('canvas-live'); 
+        var ctx = canvas.getContext('2d'); 
+        var mas=[]; 
+        var count=0; 
+        var timer; 
+        var ret = false;
+        var stop = false;
+        var pointcount = 0;
+        
+        canvas.onclick = function(event){ 
+            var x = event.offsetX; 
+            var y = event.offsetY; 
+            console.log(x); 
+            console.log(y); 
+            x = Math.floor(x/10); 
+            y = Math.floor(y/10); 
+            mas[y][x]=1; 
+            console.log(mas); 
+            drawField(); 
+            pointcount++;
+        } 
+        
+        function goLife(){ 
+            var n=60, m=60; 
+            for (var i=0; i<m; i++){ 
+                mas[i]=[]; 
+                for (var j=0; j<n; j++){ 
+                    mas[i][j]=0; 
+                    } 
                 } 
-            } 
-     } 
-} 
-
-function startLife(){ 
-    if(ret){
-       return;
-    } else if(stop){
-        return;
-    } else{
-        var mas2 = []; 
-        for (var i=0; i<60; i++){ 
-            mas2[i]=[]; 
-            for (var j=0; j<60; j++){ 
-                var neighbors = 0; 
-                if (mas[fpm(i)-1][j]==1) neighbors++;
-                if (mas[i][fpp(j)+1]==1) neighbors++;
-                if (mas[fpp(i)+1][j]==1) neighbors++;
-                if (mas[i][fpm(j)-1]==1) neighbors++;
-                if (mas[fpm(i)-1][fpp(j)+1]==1) neighbors++; 
-                if (mas[fpp(i)+1][fpp(j)+1]==1) neighbors++; 
-                if (mas[fpp(i)+1][fpm(j)-1]==1) neighbors++; 
-                if (mas[fpm(i)-1][fpm(j)-1]==1) neighbors++; 
-                (neighbors==2 || neighbors==3) ? mas2[i][j]=1 : mas2[i][j]==0; 
-            } 
         } 
-        mas = mas2; 
-        drawField(); 
-        count++; 
-        document.getElementById('count').innerHTML = count; 
-        timer = setTimeout(startLife, 300); 
-    }
-} 
-
-function fpm(i){ 
-    if(i==0) return 60; 
-        else return i; 
-    } 
-function fpp(i){ 
-    if(i==59) return -1; 
-    else return i; 
-} 
-
-// document.getElementById('start').onclick = startLife;
-        </script>
-    </body>
-</html>
+        goLife(); 
+        
+        var start = document.getElementById('start');
+        start.addEventListener('click',function(){
+            if(pointcount === 0){
+                alert('Нарисуйте изначальные клетки');
+            }else{
+                ret = false;
+                stop = false;
+                console.log(pause);
+                startLife();
+            }
+        });
+        
+        var pause = document.getElementById('pause');
+        pause.addEventListener('click',function(){
+            pauseClick();
+        });
+        function pauseClick(){
+            stop = true;
+        }
+        var cont = document.getElementById('cont');
+        cont.addEventListener('click',function(){
+            stop = false;
+            startLife();
+        });
+        
+        var re = document.getElementById('restart');
+        re.addEventListener('click',function(){
+            ret= true;
+            pointcount = 0;
+            restart();
+            
+        });
+        function restart(){
+            ctx.clearRect(0, 0, 600, 600); 
+            for (var i=0; i<60; i++){ 
+                for (var j=0; j<60; j++){ 
+                        mas[i][j] = 0; 
+                    } 
+             } 
+             count = 0;
+             document.getElementById('count').innerHTML = count; 
+             goLife();
+        }
+        
+        function drawField(){ 
+            ctx.clearRect(0, 0, 600, 600); 
+            for (var i=0; i<60; i++){ 
+                for (var j=0; j<60; j++){ 
+                    if (mas[i][j]==1){ 
+                        ctx.fillStyle = '#66ff00';
+                        ctx.fillRect(j*10, i*10, 10, 10); 
+                        } 
+                    } 
+             } 
+        } 
+        
+        function startLife(){ 
+            if(ret){
+               return;
+            } else if(stop){
+                return;
+            } else{
+                var mas2 = []; 
+                for (var i=0; i<60; i++){ 
+                    mas2[i]=[]; 
+                    for (var j=0; j<60; j++){ 
+                        var neighbors = 0; 
+                        if (mas[fpm(i)-1][j]==1) neighbors++;
+                        if (mas[i][fpp(j)+1]==1) neighbors++;
+                        if (mas[fpp(i)+1][j]==1) neighbors++;
+                        if (mas[i][fpm(j)-1]==1) neighbors++;
+                        if (mas[fpm(i)-1][fpp(j)+1]==1) neighbors++; 
+                        if (mas[fpp(i)+1][fpp(j)+1]==1) neighbors++; 
+                        if (mas[fpp(i)+1][fpm(j)-1]==1) neighbors++; 
+                        if (mas[fpm(i)-1][fpm(j)-1]==1) neighbors++; 
+                        (neighbors==2 || neighbors==3) ? mas2[i][j]=1 : mas2[i][j]==0; 
+                    } 
+                } 
+                mas = mas2; 
+                drawField(); 
+                count++; 
+                document.getElementById('count').innerHTML = count; 
+                timer = setTimeout(startLife, 300); 
+            }
+        } 
+        
+        function fpm(i){ 
+            if(i==0) return 60; 
+                else return i; 
+            } 
+        function fpp(i){ 
+            if(i==59) return -1; 
+            else return i; 
+        } 
+        
+        // document.getElementById('start').onclick = startLife;
+                </script>
+{% endblock content %}
