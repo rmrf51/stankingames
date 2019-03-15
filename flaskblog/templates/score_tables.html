@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block content1 %}
+
+<div class="backimage-about"></div> 
+
+{% endblock content1 %}
+
+{% block header%}
+
+<header class="header-container-games">
+    <div class="header-menu">
+            <a class="logo" href="{{ url_for('super_home') }}"><span>STANKIN</span>Games</a>
+            <ul class="user-list">
+                {% if current_user.is_authenticated %}
+
+               <li class="nav-item-user">
+                 <a class="nav-item " href="{{ url_for('new_post') }}">Новый пост</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('account') }}">Профиль</a>
+                </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('logout') }}">Выйти</a>
+                </li>
+
+                {% else %}
+
+                <li class="user-item">
+                    <a href="{{ url_for('login') }}" class="login">Войти</a>
+                </li>
+                <li class="user-item">
+                    <a href="{{ url_for('register') }}" class="reg">Регистация</a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+
+{% endblock header %}
+
+{% block content %}
+
+    <table>
+            <tr>
+                <th>Username</th>
+                <th>Flappy Bird</th>
+                <th>Snake</th>
+            </tr>
+            {% for item in posts %}
+            <tr>
+                <td>{{ item.username }}</td>
+                <td>{{ item.score_bird }}</td>
+                <td>{{ item.score_snake }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+
+
+
+
+    <section class="modal-rules modal">
+            <div class="rules">
+                <div class="top-rules"></div>
+                <div class="bottom-rules">
+                    <h2>Правила</h2>
+                    <span>
+                            <p>Использование Сайтом означает согласие пользователя на обработку персональных данных, указанных в момент создания учетной записи пользователя.
+                            
+                           <p> Сайт не проверяет подлинность предоставленной ему информации. Но Сайт исходит из предположения того, что пользователь дает достоверную информацию о себе.
+                         
+                           <p>При пользовании Сайтом пользователь не вправе распространять, загружать, посылать, передавать или любым иным способом размещать и распространять информацию, являющейся незаконной, вредоносной, оскорбительной, являющейся пропагандой насилия, жестокости, расовой дискриминации и т.д.
+                       </span>
+                </div>
+                <button id="rule-close" class="rules-close hidden">закрыть</button>
+                <label for="rule-close" class="cls">x</label>
+            </div>
+        </section>
+            <script>
+                function rule(){
+        
+                var ruleup = document.querySelector(".modal-rules");
+                var rulelocate = document.querySelector(".rules-link");
+                var ruleclose = ruleup.querySelector(".rules-close");
+                rulelocate.addEventListener("click",function(evt){
+                    evt.preventDefault();
+                    ruleup.classList.add("rules-show");
+                    rulelocate.classList.add("active-nav-link");
+                });
+                ruleclose.addEventListener("click",function(evt){
+                    evt.preventDefault();
+                    ruleup.classList.remove("rules-show");
+                    rulelocate.classList.remove("active-nav-link");
+                    actmodal = 0;
+                });
+            }
+            rule();
+            </script>
+
+{% endblock content %}

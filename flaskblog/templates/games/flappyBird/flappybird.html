@@ -75,9 +75,12 @@
         <div class="game-wrap">
             <h3>Flappy bird</h3>
             <div class="game-wrap">
-            <button class="startGame"  id="start"> Начать игру </button>
-            <button class="restartGame hidden-flappy"  id="restart"> Заново</button>
+                <button class="startGame"  id="start"> Начать игру </button>
+                <button class="restartGame hidden-flappy"  id="restart"> Заново</button>
+
             <canvas class="canvas-ball" id="canvas-ball" width="288" height = "512"> 
+            <!-- <form action="/flappybird" method="POST"> <div id="score-flappy"> aa </div></form> -->
+
             </div>
          </div>
          <div class="rule-wrap">
@@ -171,6 +174,20 @@
     var frontGround = new Image();
     var bottomGround = new Image();
     var upGround = new Image();
+    var koko = 0;
+
+    window.onload = function() {
+    var xhr = new XMLHttpRequest();
+    var body = 'username=' + '{{ current_user.username }}' +
+    '&score_bird=' + encodeURIComponent(score) +
+    '&score_snake=' + encodeURIComponent(koko);
+    xhr.open("POST", '/flappybird', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+  };
+
+    
+
 
     backGround.src = "{{ url_for('static', filename='img/' + 'bg.png') }}";
     frontGround.src = "{{ url_for('static', filename='img/' + 'fg.png') }}";
@@ -215,6 +232,7 @@
     }
 
     function drawScene(){
+
         start.classList.add('hidden');
         ctx.drawImage(backGround,0,0);
         for( var i =0; i< pipe.length;i++){
@@ -254,12 +272,51 @@
         gravity+=0.02;
         ctx.fillStyle="#000";
         ctx.font = "24px Arial";
+        // document.getElementById('score-flappy').innerHTML=score;
+
+        // xhr.open('POST', '/flappybird');
+        // xhr.setRequestHeader('Content-Type',
+        // 'application/x-www-form-urlencoded');
+        // xhr.send('username' + "{{ current_user.username }}", 'score_bird' + score, 'score_snake' + 0);
+
+
+
+        // $('startGame').click(function() {
+        // $.ajax({
+        //     url: '/flappybirdscore',
+        //     data: {
+        //         username: '{{ current_user.username }}',
+        //         score_bird: score,
+        //         score_snake: 0
+        //     },
+        //     type: 'POST',
+        //     success: function(response) {
+        //         console.log(response);
+        //     },
+        //     error: function(error) {
+        //         console.log(error);
+        //     }
+        // });
+        // });
+        
+
+
+
+
         ctx.fillText('Score ' + score, 10, cvs.height-20);
+
 
         requestAnimationFrame(drawScene);
     }
     function reload(){
         location.reload();
+        var xhr = new XMLHttpRequest();
+        var body = 'username=' + encodeURIComponent({{ current_user.username }}) +
+        '&score_bird=' + encodeURIComponent(score) +
+        '&score_snake=' + encodeURIComponent(0);
+        xhr.open("POST", '/flappybirdscore', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(body);
     }
 
 

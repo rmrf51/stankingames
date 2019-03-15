@@ -81,7 +81,8 @@ class ResetPasswordForm(FlaskForm):
 
 class Score(FlaskForm):
     username = StringField('Никнейм', validators=[DataRequired(), Length(min=2, max=20)])
-    score = IntegerField('Score', default=0)
+    score1 = IntegerField('Score', default=0)
+    score2 = IntegerField('Score2', default=0)
 
 
     
