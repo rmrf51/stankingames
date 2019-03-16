@@ -15,13 +15,13 @@
                 {% if current_user.is_authenticated %}
 
                 <li class="nav-item-user">
-                 <a class="nav-item " href="{{ url_for('new_post') }}">New Post</a>
+                 <a class="nav-item " href="{{ url_for('new_post') }}">Новый пост</a>
                 </li>
                 <li class="nav-item-user">    
-                    <a class="nav-item " href="{{ url_for('account') }}">Account</a>
+                    <a class="nav-item " href="{{ url_for('account') }}">Профиль</a>
                 </li>
                 <li class="nav-item-user">    
-                    <a class="nav-item " href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-item " href="{{ url_for('logout') }}">Выйти</a>
                 </li>
 
                 {% else %}
@@ -68,10 +68,10 @@
 <section class="game-content">
     <div class="pong-block">
         <div class="game-wrap">
-            <h3>Flappy bird</h3>
+            <h3>Live the game</h3>
             <div class="game-wrap">
-                    <canvas id="canvas-live" width="600" height = "600"> </canvas>
-                    <p>Количество циклов <span id='count'></span></p>
+                   <canvas id="canvas-live" width="600" height = "600"></canvas>
+                   <p>Количество циклов <span id='count'></span></p>
                    <button class="live-button" id='start'>Начать</button>
                    <button class="live-button" id='restart'>Заново</button>
                    <button class="live-button" id='pause'>Пауза</button>
@@ -79,20 +79,12 @@
             </div>
          </div>
          <div class="rule-wrap">
-             <h3 style="padding: 20px">Управление</h3>
+             <h3>Управление</h3>
              <div class="pong-rule">
-                 Начать игру ENTER
-                 <p>
-                     Левый игрок:
-                     вверх - Q
-                     вниз - A
-                 </p>
-                 <p>
-                     Правый игрок:
-                     вверх - P
-                     вниз - ;
-                 </p>
-                 Игра длится до 11 очков
+                <p>В любом месте игрового поля можно создать клетку</p>
+                <p>Если рядом с ней будет другая клетка, то они образуют новую клетку</p>
+                <p>Если рядом с ней не будет другой клетки, то она умрет</p>
+                <p>Игра практические бесконечна</p>
              </div>
 
 
@@ -130,6 +122,16 @@
     </div>
 </section>
 </div>
+<footer class="footer-container">
+        <div class="foot-wrap">
+            <h3>Made by IDB's 16-01 students</h3>
+            <ul>
+              <li> <p>Frontend by Eremeev N.V</p></li> 
+               <li><p>Backend by Kotov Y.N</p></li> 
+               <li><p>Tested by Belugina E.D</p></li>
+            </ul>
+        </div>
+    </footer>
 
 <script>
         function rule(){

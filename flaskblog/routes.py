@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, Flask
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm, Score
-from flaskblog.models import User, Post
+from flaskblog.models import User, Post, Score_table
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from flask_socketio import SocketIO, send
@@ -56,7 +56,15 @@ def livegame():
 
 @app.route("/flappybird", methods=['GET', 'POST'])
 def flappybird():
-    return render_template('games/flappyBird/flappybird.html', title='FlappyBird')
+    if request.method == 'POST':
+        newUsername = request.form['username']
+        newScore_bird = request.form['score_bird']
+        newScore_snake = request.form['score_snake']
+        score = Score_table(newUsername, newScore_bird, newScore_snake)
+        db.session.add(score)
+        db.session.commit()
+    else:
+        return render_template('games/flappyBird/flappybird.html', title='FlappyBall')
 
 
 #end games
@@ -234,3 +242,8 @@ def reset_token(token):
         return redirect(url_for('login'))
     
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+@app.route("/score_table", methods=['POST', 'GET'])
+def score_table():
+    posts = Score_table.query.all()
+    return render_template('score_tables.html', title='Scores', posts=posts)

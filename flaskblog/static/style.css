@@ -250,6 +250,11 @@ ul{
 	background-repeat: no-repeat;
 	/*background-position: 10px;*/
 }
+.block-list li:nth-child(4){
+	background-image:url('live.png');
+	background-repeat: no-repeat;
+	/*background-position: 10px;*/
+}
 .block-item h3{
 	color:#fff;
 	font-size:30px;
@@ -641,7 +646,8 @@ ul{
 .tutor-wrap{
 	width:1300px;
 	margin: 0 auto;
-	background-color:#fff;
+    background-color:#fff;
+    padding-bottom: 20px;
 }
 .tutor-list{
 	list-style: none;
@@ -708,7 +714,8 @@ ul{
 .rule-wrap h3{
 	margin:0;
 	font-size:30px;
-	text-align: center;
+    text-align: center;
+    margin-bottom: 30px;
 }
 .pong-rule{
 	width:400px;
@@ -758,7 +765,7 @@ ul{
     /* top: 550px;
     left: 100px; */
     top: -220px;
-    left: 190px;
+    left: 310px;
 }
 .restartGame{
     border:none;
@@ -769,11 +776,13 @@ ul{
     position: relative;
     /* top: 550px;
     left: 120px; */
-    top: -220px;
-    left: 160px;
+    top: -190px;
+    left: 200px;
 }
 .canvas-ball{
-    background-image: url("{{ url_for('static', filename='img/' + 'bg.png') }}");
+    margin-top:50px;
+    background-image: url('bg.png');
+    border: 3px solid black;
 }
 .hidden-flappy{
     visibility: hidden;
@@ -785,26 +794,84 @@ ul{
     width:600px;
     height: 600px;
     border: 3px solid gray;
-    margin: 40px;
     background-color: black;
+    margin-left: 100px;
 }
 .live-button{
     border:none;
     color:white;
-    background-color: orange;
+    background-color: #ff8c00;
     font-size:22px;
     border:2px solid black;
     border-radius: 10px;
 }
 .live-button:hover{
     background-color:black;
-    color:orange;
+    color:#ff8c00;
 }
 
 
 /* snake-game */
 
-.canvas-snake{
+#canvas-snake{
     display: block;
     margin: 0 auto;
+    margin-left: 110px;
+    border: 3px solid black;
+}
+.legend-new{
+    /* width: 62px;
+height: 23px; */
+/* background-color:; */
+font-size: 20px;
+color:  #ff8c00;
+text-decoration: none;
+}
+.foot-wrap{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+margin-left: 525px;
+
+}
+.foot-wrap h3{
+    color:#ff8c00;
+    font-size:25px;
+    margin:0;
+    margin-top: 10px;
+}
+.foot-wrap ul{
+    display: flex;
+    margin-left: -100px;
+margin-top: 20px;
+}
+.foot-wrap p{
+    margin:0;
+    margin-left:10px;
+    color:#ff8c00; 
+    font-size:20px;
+}
+.mr-2,.ml-2{
+    color:#ff8c00; 
+    text-decoration: none;
+}
+.ml-2:hover{
+   text-shadow: 0.5px 0.5px #ff8c00;
+}
+.reg1{
+ width: 154px;
+height: 41px;
+text-decoration: none;
+background-color: orange;
+color: white;
+font-size: 20px;
+outline: none;
+box-shadow: none;
+}
+.mb-5{
+    width:100px;
+}
+.btn-delete{
+    border:none;
+    background-color: transparent;
 }

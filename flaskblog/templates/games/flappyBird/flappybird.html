@@ -15,13 +15,13 @@
                 {% if current_user.is_authenticated %}
 
                 <li class="nav-item-user">
-                 <a class="nav-item " href="{{ url_for('new_post') }}">New Post</a>
+                 <a class="nav-item " href="{{ url_for('new_post') }}">Новый Пост</a>
                 </li>
                 <li class="nav-item-user">    
-                    <a class="nav-item " href="{{ url_for('account') }}">Account</a>
+                    <a class="nav-item " href="{{ url_for('account') }}">Профиль</a>
                 </li>
                 <li class="nav-item-user">    
-                    <a class="nav-item " href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-item " href="{{ url_for('logout') }}">Выйти</a>
                 </li>
 
                 {% else %}
@@ -73,7 +73,7 @@
 <section class="game-content">
     <div class="pong-block">
         <div class="game-wrap">
-            <h3>Flappy bird</h3>
+            <h3>Flappy ball</h3>
             <div class="game-wrap">
             <button class="startGame"  id="start"> Начать игру </button>
             <button class="restartGame hidden-flappy"  id="restart"> Заново</button>
@@ -81,20 +81,13 @@
             </div>
          </div>
          <div class="rule-wrap">
-             <h3 style="padding: 20px">Управление</h3>
+             <h3 ">Управление</h3>
              <div class="pong-rule">
-                 Начать игру ENTER
+                 Начать игру - нажмите на кнопку
                  <p>
-                     Левый игрок:
-                     вверх - Q
-                     вниз - A
+                    Чтобы птичка взелтела - нажмите пробел
                  </p>
-                 <p>
-                     Правый игрок:
-                     вверх - P
-                     вниз - ;
-                 </p>
-                 Игра длится до 11 очков
+               Игра длится до первого касаяния препятствия
              </div>
 
 
@@ -132,6 +125,16 @@
     </div>
 </section>
 </div>
+<footer class="footer-container">
+        <div class="foot-wrap">
+            <h3>Made by IDB's 16-01 students</h3>
+            <ul>
+              <li> <p>Frontend by Eremeev N.V</p></li> 
+               <li><p>Backend by Kotov Y.N</p></li> 
+               <li><p>Tested by Belugina E.D</p></li>
+            </ul>
+        </div>
+    </footer>
 
 <script>
         function rule(){
@@ -172,7 +175,7 @@
     var bottomGround = new Image();
     var upGround = new Image();
 
-    backGround.src = "{{ url_for('static', filename='img/' + 'bg.png') }}";
+    backGround.src = "{{ url_for('static', filename='img/' + 'bg.png') }}"
     frontGround.src = "{{ url_for('static', filename='img/' + 'fg.png') }}";
     bottomGround.src = "{{ url_for('static', filename='img/' + 'pipeBottom.png') }}";
     upGround.src = "{{ url_for('static', filename='img/' + 'pipeUp.png') }}";
@@ -215,7 +218,7 @@
     }
 
     function drawScene(){
-        start.classList.add('hidden');
+        start.classList.add('hidden-flappy');
         ctx.drawImage(backGround,0,0);
         for( var i =0; i< pipe.length;i++){
             ctx.drawImage(upGround,pipe[i].x,pipe[i].y);
@@ -233,7 +236,7 @@
                 && xPos <= pipe[i].x + upGround.width
                 && (yPos <= pipe[i].y + upGround.height
                 || yPos + bird.height >= pipe[i].y + upGround.height + gap) || yPos + bird.height >= cvs.height - frontGround.height) {
-                restart.classList.remove('hidden');
+                restart.classList.remove('hidden-flappy');
 
                 
 
@@ -254,11 +257,18 @@
         gravity+=0.02;
         ctx.fillStyle="#000";
         ctx.font = "24px Arial";
-        ctx.fillText('Score ' + score, 10, cvs.height-20);
+        ctx.fillText('Score ' + score, 10, cvs.height-40);
 
         requestAnimationFrame(drawScene);
     }
     function reload(){
+        var xhr = new XMLHttpRequest();
+        var body = 'username=' + '{{ current_user.username }}' +
+        '&score_bird=' + encodeURIComponent(score) +
+        '&score_snake=' + encodeURIComponent(0);
+        xhr.open("POST", '/flappybird', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(body);
         location.reload();
     }
 

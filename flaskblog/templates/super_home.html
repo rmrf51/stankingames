@@ -43,6 +43,9 @@
                 <li class="nav-item-user">    
                     <a class="nav-item " href="{{ url_for('logout') }}">Выйти</a>
                 </li>
+                <li class="nav-item-user">    
+                    <a class="nav-item " href="{{ url_for('score_table') }}">счет</a>
+                </li>
                 {% else %}
 
                 <li class="user-item">
@@ -68,27 +71,19 @@
             <ul class="block-list">
                 <li class="block-item">
                     <h3>Ping Pong</h3>
-                    <p>gjsgkjsdhgjkfsdjgsndgjkhsdjjhsjgsdjg
-                    sdgkjsdjkgsdjgsd
-                gjsdgjksd</p>
+                    <p>Играйте 1 на 1 со своим другом</p>
                 </li>
                 <li class="block-item">
                     <h3>Flappy Ball</h3>
-                    <p>gjsgkjsdhgjkfsdjgsndgjkhsdjjhsjgsdjg
-                    sdgkjsdjkgsdjgsd
-                gjsdgjksd</p>
+                    <p>Сколько очков вы смоежете набрать? Думаю не больше 20</p>
                 </li>
                 <li class="block-item">
                     <h3>Snake</h3>
-                    <p>gjsgkjsdhgjkfsdjgsndgjkhsdjjhsjgsdjg
-                    sdgkjsdjkgsdjgsd
-                gjsdgjksd</p>
+                    <p>Классическая змейка, прям как в детсвте</p>
                 </li>
                 <li class="block-item">
-                    <h3>LALA</h3>
-                    <p>gjsgkjsdhgjkfsdjgsndgjkhsdjjhsjgsdjg
-                    sdgkjsdjkgsdjgsd
-                gjsdgjksd</p>
+                    <h3>Жизнь</h3>
+                    <p>Игра "Жизнь" знакома каждому математику</p>
                 </li>
             </ul>
         </section>
@@ -176,7 +171,14 @@
 </section>
 
 <footer class="footer-container">
-    
+    <div class="foot-wrap">
+        <h3>Made by IDB's 16-01 students</h3>
+        <ul>
+          <li> <p>Frontend by Eremeev N.V</p></li> 
+           <li><p>Backend by Kotov Y.N</p></li> 
+           <li><p>Tested by Belugina E.D</p></li>
+        </ul>
+    </div>
 </footer>
 
 <script>

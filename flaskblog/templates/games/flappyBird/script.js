@@ -72,7 +72,7 @@ function drawScene(){
             && xPos <= pipe[i].x + upGround.width
             && (yPos <= pipe[i].y + upGround.height
             || yPos + bird.height >= pipe[i].y + upGround.height + gap) || yPos + bird.height >= cvs.height - frontGround.height) {
-            restart.classList.remove('hidden');
+            restart.classList.remove('hidden-flappy');
             ctx.fillText('Ваш счет ' + score, 85, cvs.height-230)
             return 0;
             }
@@ -90,7 +90,7 @@ function drawScene(){
     gravity+=0.02;
     ctx.fillStyle="#000";
     ctx.font = "24px Arial";
-    ctx.fillText('Score ' + score, 10, cvs.height-20);
+    ctx.fillText('Score ' + score, 10, cvs.height-40);
 
     requestAnimationFrame(drawScene);
 }

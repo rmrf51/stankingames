@@ -53,8 +53,8 @@
         <small class="text-muted">{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
         {% if post.author == current_user %}
             <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id = post.id) }}">Update</a>
-                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1 legend-new" href="{{ url_for('update_post', post_id = post.id) }}">Обновить</a>
+                <button type="button" class="btn-delete btn btn-danger btn-sm m-1 legend-new" data-toggle="modal" data-target="#deleteModal">Удалить</button>
             </div>
         {% endif %}
         </div>
@@ -67,13 +67,13 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+              <h5 class="modal-title" id="deleteModalLabel">Удалить пост?</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
               <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
                 <input class="btn btn-danger" type="submit" value="Delete">
               </form>

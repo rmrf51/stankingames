@@ -48,6 +48,21 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 
+class Score_table(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False)
+    score_bird = db.Column(db.Integer)
+    score_snake = db.Column(db.Integer)
+    
+    def __init__(self, username, score_bird, score_snake):
+        self.username = username
+        self.score_bird = score_bird
+        self.score_snake = score_snake
+
+    def __repr__(self):
+        return f"Score_table('{self.username}', '{self.score_bird}', '{self.score_snake}')"
+
+
 #score db
 # class Score_snake(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
