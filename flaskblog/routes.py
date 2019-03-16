@@ -245,5 +245,15 @@ def reset_token(token):
 
 @app.route("/score_table", methods=['POST', 'GET'])
 def score_table():
-    posts = Score_table.query.all()
-    return render_template('score_tables.html', title='Scores', posts=posts)
+   
+    posts = Score_table.query.order_by(Score_table.score_bird.desc())
+    posts1 = [11]
+    # for i in range(0,9):
+    #     posts1[i] = i
+    posts1[0] = posts[0]
+    # posts1[1] = posts[1]
+    # posts1[2] = posts[2]
+    # posts1[3] = posts[3]
+    # posts1[4] = posts[4]
+
+    return render_template('score_tables.html', title='Scores', posts=posts1)
