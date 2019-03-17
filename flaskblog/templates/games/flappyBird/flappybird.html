@@ -81,13 +81,20 @@
             </div>
          </div>
          <div class="rule-wrap">
-             <h3 ">Управление</h3>
+             <h3 ">Flappy Score</h3>
              <div class="pong-rule">
-                 Начать игру - нажмите на кнопку
-                 <p>
-                    Чтобы птичка взелтела - нажмите пробел
-                 </p>
-               Игра длится до первого касаяния препятствия
+                <table " >
+                    <tr style="color:orange;border:2px solid red ">
+                        <th style="color:rgb(8, 6, 2);border:2px solid red ">Username</th>
+                        <th style="color:rgb(12, 8, 0);border:2px solid red ">Flappy Bird</th>
+                    </tr>
+                    {% for item in posts %}
+                    <tr>
+                        <td style="color:rgb(8, 6, 2);border:2px solid red ">{{ item.username }}</td>
+                        <td style="color:rgb(12, 8, 0);border:2px solid red ">{{ item.score_bird }}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
              </div>
 
 

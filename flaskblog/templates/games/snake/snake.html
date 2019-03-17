@@ -74,10 +74,20 @@
             </div>
          </div>
          <div class="rule-wrap">
-             <h3>Управление</h3>
+             <h3>Score Snake</h3>
              <div class="pong-rule">
-                    <p>Начать игру - стрелочки </p> 
-                    <p>Игра длится смерти</p>
+                <table " >
+                    <tr style="color:orange;border:2px solid red ">
+                        <th style="color:rgb(8, 6, 2);border:2px solid red ">Username</th>
+                        <th style="color:rgb(12, 8, 0);border:2px solid red ">Snake Score</th>
+                    </tr>
+                    {% for item in posts %}
+                    <tr>
+                        <td style="color:rgb(8, 6, 2);border:2px solid red ">{{ item.username }}</td>
+                        <td style="color:rgb(12, 8, 0);border:2px solid red ">{{ item.score_snake }}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
              </div>
 
 

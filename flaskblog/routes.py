@@ -47,8 +47,10 @@ def pong():
 
 @app.route("/snake", methods=['GET', 'POST'])
 def snake():
-    # form = Score()
-    return render_template('games/snake/snake.html', title='Snake')
+    posts = Score_table.query.order_by(Score_table.score_snake.desc())
+    posts1 = posts
+    posts1 = posts1[:9]
+    return render_template('games/snake/snake.html', title='Snake', posts=posts1)
 
 @app.route("/livegame")
 def livegame():
@@ -56,6 +58,9 @@ def livegame():
 
 @app.route("/flappybird", methods=['GET', 'POST'])
 def flappybird():
+    posts = Score_table.query.order_by(Score_table.score_bird.desc())
+    posts1 = posts
+    posts1 = posts1[:9]
     if request.method == 'POST':
         newUsername = request.form['username']
         newScore_bird = request.form['score_bird']
@@ -64,7 +69,7 @@ def flappybird():
         db.session.add(score)
         db.session.commit()
     else:
-        return render_template('games/flappyBird/flappybird.html', title='FlappyBall')
+        return render_template('games/flappyBird/flappybird.html', title='FlappyBall', posts=posts1)
 
 
 #end games
@@ -245,15 +250,7 @@ def reset_token(token):
 
 @app.route("/score_table", methods=['POST', 'GET'])
 def score_table():
-   
     posts = Score_table.query.order_by(Score_table.score_bird.desc())
-    posts1 = [11]
-    # for i in range(0,9):
-    #     posts1[i] = i
-    posts1[0] = posts[0]
-    # posts1[1] = posts[1]
-    # posts1[2] = posts[2]
-    # posts1[3] = posts[3]
-    # posts1[4] = posts[4]
-
+    posts1 = posts
+    posts1 = posts1[:10]
     return render_template('score_tables.html', title='Scores', posts=posts1)
